@@ -10,12 +10,13 @@ from .evaluation import write_evaluation_omission
 from .features import build_baseline_features
 from .inventory import inventory_sources
 from .linkage import build_linkage
-from .modeling import write_modeling_omission
+from .modeling import write_model_infrastructure_readiness, write_modeling_omission
+from .olives_native_dataset import build_olives_native_baseline
 from .olives_native_outcomes import audit_olives_native_outcomes
 from .outcome_audit import audit_outcomes
 from .recovery_investigation import run_recovery_investigation
 from .reporting import write_final_report, write_progress
-from .schema import validate_dataset, write_schema
+from .schema import validate_dataset, write_hospital_schema_validation, write_schema
 
 
 def _paths(config_path: str) -> dict[str, Path]:
@@ -60,6 +61,7 @@ def run_full(config_path: str) -> None:
     statuses["MULTI-03"] = "BLOCKED_EXTERNAL_CROSSWALK_CONFIRMATION"
     build_baseline_features(paths["interim"], paths["linkage"], paths["features"])
     statuses["MULTI-04"] = "PASSED_WITH_PREDICTOR_VARIATION_WARNINGS"
+    build_olives_native_baseline(paths["raw"], paths["processed"], paths["features"])
     build_dataset(paths["features"], paths["processed"], paths["features"])
     errors = validate_dataset(paths["processed"] / "multimodal_baseline.csv")
     statuses["MULTI-05"] = "BLOCKED_BY_LINKAGE_VERIFICATION" if not errors else "BLOCKED"
@@ -95,9 +97,11 @@ def run_full(config_path: str) -> None:
     )
     write_modeling_omission(paths["modeling"], reason)
     write_evaluation_omission(paths["modeling"], reason)
+    write_model_infrastructure_readiness(paths["modeling"])
     statuses["MULTI-07"] = "CONDITIONAL_NOT_APPLICABLE"
     statuses["MULTI-08"] = "CONDITIONAL_NOT_APPLICABLE"
     write_schema(paths["schema"])
+    write_hospital_schema_validation(paths["schema"], paths["final"])
     statuses["MULTI-09"] = "PASSED"
     statuses["MULTI-10"] = "PASSED"
     write_progress(paths["final"], statuses)
@@ -116,6 +120,7 @@ def main() -> None:
         "build",
         "outcomes",
         "olives-native-outcomes",
+        "olives-native-baseline",
         "recovery-investigation",
         "schema",
         "full",
@@ -137,6 +142,8 @@ def main() -> None:
         audit_outcomes(paths["raw"], paths["processed"], paths["outcomes"])
     elif args.command == "olives-native-outcomes":
         audit_olives_native_outcomes(paths["raw"], paths["processed"], paths["outcomes"])
+    elif args.command == "olives-native-baseline":
+        build_olives_native_baseline(paths["raw"], paths["processed"], paths["features"])
     elif args.command == "recovery-investigation":
         run_recovery_investigation(
             paths["raw"],
@@ -149,6 +156,7 @@ def main() -> None:
         )
     elif args.command == "schema":
         write_schema(paths["schema"])
+        write_hospital_schema_validation(paths["schema"], paths["final"])
     elif args.command == "full":
         run_full(args.config)
 

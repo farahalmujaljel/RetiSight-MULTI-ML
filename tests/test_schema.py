@@ -2,7 +2,12 @@ from pathlib import Path
 
 import pandas as pd
 
-from retisight_multi_ml.schema import validate_dataset, write_schema
+from retisight_multi_ml.schema import (
+    synthetic_hospital_records,
+    validate_dataset,
+    write_hospital_schema_validation,
+    write_schema,
+)
 
 
 def test_schema_files_and_validation(tmp_path: Path):
@@ -23,3 +28,10 @@ def test_schema_files_and_validation(tmp_path: Path):
     ).to_csv(dataset, index=False)
     assert validate_dataset(dataset) == []
 
+
+def test_synthetic_hospital_schema_fixture_validates(tmp_path: Path):
+    fixture = tmp_path / "hospital.csv"
+    synthetic_hospital_records().to_csv(fixture, index=False)
+    assert validate_dataset(fixture) == []
+    assert write_hospital_schema_validation(tmp_path / "schemas", tmp_path / "reports") == []
+    assert (tmp_path / "reports" / "hospital_schema_validation.md").exists()

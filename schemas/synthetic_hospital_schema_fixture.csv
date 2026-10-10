@@ -1,0 +1,3 @@
+source_dataset,research_patient_id,research_eye_id,eye_laterality,linkage_status,age_years,baseline_bcva_etdrs,baseline_cst_um,hba1c_percent,hypertension,dyslipidemia,renal_disease,egfr_ml_min_1_73m2,anti_vegf_injection_count_prior_12mo,last_anti_vegf_agent,followup_bcva_etdrs,followup_cst_um
+synthetic_hospital_fixture,SYN-P-001,SYN-E-001-OD,OD,SYNTHETIC_SCHEMA_VALIDATION_ONLY,62,68,412,8.1,True,True,False,72,3,ranibizumab,75,331
+synthetic_hospital_fixture,SYN-P-002,SYN-E-002-OS,OS,SYNTHETIC_SCHEMA_VALIDATION_ONLY,58,55,505,7.4,False,True,True,49,0,,58,470

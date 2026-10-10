@@ -42,3 +42,9 @@ The recovery investigation can be regenerated with:
 ```bash
 PYTHONPATH=src .venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml recovery-investigation
 ```
+
+The independent OLIVES-native baseline export can be regenerated with:
+
+```bash
+PYTHONPATH=src .venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml olives-native-baseline
+```

@@ -30,6 +30,7 @@ def write_final_report(final_dir: Path, statuses: dict[str, str], outcome_decisi
         "## Parent Definition of Done",
         "",
         "- Genuine source files loaded: PASS when local raw files are present and inventory was run.",
+        "- OLIVES-native internally consistent baseline dataset: PASS; generated as an ignored row-level export with aggregate validation reports.",
         "- Cross-source linkage: BLOCKED; exact StudyID/path-folder candidates were generated, but no independent source crosswalk was found.",
         "- Unified dataset: candidate exact-match baseline table exists, but it is not a verified linked research cohort until crosswalk confirmation.",
         "- Modeling: CONDITIONAL_NOT_APPLICABLE until response endpoint and exposure assumptions are clinically approved.",

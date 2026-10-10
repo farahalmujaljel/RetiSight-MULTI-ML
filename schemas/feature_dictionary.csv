@@ -7,4 +7,11 @@ baseline_cst_um,Baseline central subfield thickness,number,um,True,baseline_pred
 irf_present,Any baseline scan annotated with intraretinal fluid,integer,0/1,True,baseline_predictor
 srf_present,Any baseline scan annotated with subretinal fluid,integer,0/1,True,baseline_predictor
 hba1c_percent,Future hospital HbA1c value,number,percent,True,future_hospital
+hypertension,Future hospital hypertension flag,boolean,true/false,True,future_hospital
+dyslipidemia,Future hospital dyslipidemia flag,boolean,true/false,True,future_hospital
+renal_disease,Future hospital renal disease flag,boolean,true/false,True,future_hospital
 egfr_ml_min_1_73m2,Future hospital renal function,number,mL/min/1.73m2,True,future_hospital
+anti_vegf_injection_count_prior_12mo,Future hospital anti-VEGF treatment history,integer,count,True,future_hospital
+last_anti_vegf_agent,Future hospital last anti-VEGF medication,string,,True,future_hospital
+followup_bcva_etdrs,Future hospital follow-up ETDRS visual acuity,number,letters,True,follow_up
+followup_cst_um,Future hospital follow-up central subfield thickness,number,um,True,follow_up

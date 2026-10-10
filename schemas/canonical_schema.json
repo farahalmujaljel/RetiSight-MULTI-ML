@@ -78,12 +78,68 @@
       "temporal_role": "future_hospital"
     },
     {
+      "field_name": "hypertension",
+      "clinical_meaning": "Future hospital hypertension flag",
+      "data_type": "boolean",
+      "unit_or_allowed_values": "true/false",
+      "nullable": true,
+      "temporal_role": "future_hospital"
+    },
+    {
+      "field_name": "dyslipidemia",
+      "clinical_meaning": "Future hospital dyslipidemia flag",
+      "data_type": "boolean",
+      "unit_or_allowed_values": "true/false",
+      "nullable": true,
+      "temporal_role": "future_hospital"
+    },
+    {
+      "field_name": "renal_disease",
+      "clinical_meaning": "Future hospital renal disease flag",
+      "data_type": "boolean",
+      "unit_or_allowed_values": "true/false",
+      "nullable": true,
+      "temporal_role": "future_hospital"
+    },
+    {
       "field_name": "egfr_ml_min_1_73m2",
       "clinical_meaning": "Future hospital renal function",
       "data_type": "number",
       "unit_or_allowed_values": "mL/min/1.73m2",
       "nullable": true,
       "temporal_role": "future_hospital"
+    },
+    {
+      "field_name": "anti_vegf_injection_count_prior_12mo",
+      "clinical_meaning": "Future hospital anti-VEGF treatment history",
+      "data_type": "integer",
+      "unit_or_allowed_values": "count",
+      "nullable": true,
+      "temporal_role": "future_hospital"
+    },
+    {
+      "field_name": "last_anti_vegf_agent",
+      "clinical_meaning": "Future hospital last anti-VEGF medication",
+      "data_type": "string",
+      "unit_or_allowed_values": null,
+      "nullable": true,
+      "temporal_role": "future_hospital"
+    },
+    {
+      "field_name": "followup_bcva_etdrs",
+      "clinical_meaning": "Future hospital follow-up ETDRS visual acuity",
+      "data_type": "number",
+      "unit_or_allowed_values": "letters",
+      "nullable": true,
+      "temporal_role": "follow_up"
+    },
+    {
+      "field_name": "followup_cst_um",
+      "clinical_meaning": "Future hospital follow-up central subfield thickness",
+      "data_type": "number",
+      "unit_or_allowed_values": "um",
+      "nullable": true,
+      "temporal_role": "follow_up"
     }
   ]
 }
