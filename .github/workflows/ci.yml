@@ -30,3 +30,4 @@ jobs:
         run: |
           set -euo pipefail
           python -m retisight_multi_ml.cli --config configs/pipeline.yaml schema
+          python -m retisight_multi_ml.cli --config configs/pipeline.yaml synthetic-demo --n-patients 80 --seed 20261011 --output-dir /tmp/retisight-synthetic-data --reports-dir /tmp/retisight-synthetic-reports --artifacts-dir /tmp/retisight-synthetic-artifacts

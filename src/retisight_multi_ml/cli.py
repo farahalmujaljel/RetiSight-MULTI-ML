@@ -17,6 +17,7 @@ from .outcome_audit import audit_outcomes
 from .recovery_investigation import run_recovery_investigation
 from .reporting import write_final_report, write_progress
 from .schema import validate_dataset, write_hospital_schema_validation, write_schema
+from .synthetic_demo import SyntheticDemoConfig, run_synthetic_demo
 
 
 def _paths(config_path: str) -> dict[str, Path]:
@@ -126,6 +127,13 @@ def main() -> None:
         "full",
     ]:
         sub.add_parser(name)
+    synthetic_parser = sub.add_parser("synthetic-demo")
+    synthetic_parser.add_argument("--n-patients", type=int, default=1000)
+    synthetic_parser.add_argument("--seed", type=int, default=20261011)
+    synthetic_parser.add_argument("--output-dir", default="data/synthetic_demo")
+    synthetic_parser.add_argument("--reports-dir", default="reports/demo")
+    synthetic_parser.add_argument("--artifacts-dir", default="artifacts/synthetic_demo")
+    synthetic_parser.add_argument("--no-example-inference", action="store_true")
     args = parser.parse_args()
     paths = _paths(args.config)
     if args.command == "inventory":
@@ -159,6 +167,17 @@ def main() -> None:
         write_hospital_schema_validation(paths["schema"], paths["final"])
     elif args.command == "full":
         run_full(args.config)
+    elif args.command == "synthetic-demo":
+        run_synthetic_demo(
+            SyntheticDemoConfig(
+                n_patients=args.n_patients,
+                random_seed=args.seed,
+                output_dir=args.output_dir,
+                reports_dir=args.reports_dir,
+                artifacts_dir=args.artifacts_dir,
+            ),
+            example_inference=not args.no_example_inference,
+        )
 
 
 if __name__ == "__main__":
