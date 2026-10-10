@@ -11,6 +11,7 @@ This PR prepares the MULTI-ML feature branch for engineering review while preser
 - Added OLIVES-native feature metadata and supported clinical feature manifest.
 - Added clinical ML and OCT biomarker interface schemas with integration contracts.
 - Added release audit documentation and CI protected-file checks.
+- Added `MULTI-DEMO-01`, a fully fictitious synthetic end-to-end multimodal demo with separate cohort generation, six-month synthetic outcomes, grouped model comparison, reporting, figures, and inference output.
 
 ## Scientific Status
 
@@ -18,13 +19,22 @@ This PR prepares the MULTI-ML feature branch for engineering review while preser
 - Cross-dataset linkage: trajectory-supported candidate links only; not externally verified.
 - Six-month response modeling: disabled.
 - Real model training: disabled without validated outcome manifest.
+- Synthetic demo metrics are explicitly labeled `SYNTHETIC EXPERIMENT - NOT CLINICAL VALIDATION` and are not clinical performance estimates.
+
+## MULTI-DEMO-01 Synthetic Demo
+
+- Generator: `src/retisight_multi_ml/synthetic_demo/generator.py`
+- CLI: `python -m retisight_multi_ml.cli --config configs/pipeline.yaml synthetic-demo`
+- Default generated cohort: 1,000 synthetic patients, 1,306 synthetic eyes, 1,274 outcome-eligible eyes.
+- Models: Clinical-only and Clinical + OCT regularized logistic regression on identical eligible eyes and patient-grouped held-out splits.
+- Safeguards: all rows carry synthetic provenance; baseline-only predictors are enforced; no synthetic crosswalk is used to validate genuine records.
 
 ## Validation
 
 - Full pipeline passed locally with private raw files present.
-- Test suite passed locally: 27 tests.
-- Ruff passed locally.
-- GitHub Actions `ci` passed on commit `77e60a9`.
+- Test suite passed locally: 32 tests.
+- Ruff was not available in the local shell used for this update; GitHub Actions installs the locked dependencies and runs `ruff check src tests`.
+- GitHub Actions `ci` includes a synthetic CLI smoke test using `/tmp` output paths.
 
 ## Privacy
 

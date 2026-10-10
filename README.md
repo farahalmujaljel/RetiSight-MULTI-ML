@@ -18,6 +18,22 @@ Place authorized source files in `data/raw/`:
 
 Raw data and row-level outputs are ignored by Git.
 
+## Synthetic Demonstration
+
+`MULTI-DEMO-01` adds a fully fictitious end-to-end multimodal proof of concept for hackathon demonstration only.
+
+Run:
+
+```bash
+python -m retisight_multi_ml.cli --config configs/pipeline.yaml synthetic-demo
+```
+
+The command writes ignored synthetic row-level tables to `data/synthetic_demo/`, aggregate reports to `reports/demo/`, and synthetic-only artifacts to `artifacts/synthetic_demo/`.
+
+All outputs are labeled `SYNTHETIC EXPERIMENT - NOT CLINICAL VALIDATION`. The real OLIVES/OCT-DME six-month treatment-response pathway remains blocked until verified linkage, visit timing, and treatment histories are available.
+
+---
+
 ## Run
 
 ```bash

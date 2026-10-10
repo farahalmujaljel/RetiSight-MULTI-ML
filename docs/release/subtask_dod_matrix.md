@@ -15,6 +15,7 @@ Audit date: 2026-10-11
 | MULTI-08 | CONDITIONAL_NOT_APPLICABLE | No clinical model metrics claimed. | Same validated outcome blocker. |
 | MULTI-09 | PASSED | Reports and reproducible CLI available. | Raw-data pipeline requires private local files. |
 | MULTI-10 | PASSED | Hospital schema synthetic validation implemented. | No live hospital integration. |
+| MULTI-DEMO-01 | PASSED_SYNTHETIC_DEMONSTRATION | Fully fictitious cohort generator, six-month synthetic outcomes, grouped synthetic model comparison, inference demo, and CI smoke test. | Not clinical validation; real response modeling remains blocked. |
 
 ## Parent Task Decision
 
