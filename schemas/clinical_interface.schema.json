@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/farahalmujaljel/RetiSight-MULTI-ML/schemas/clinical_interface.schema.json",
+  "title": "RetiSight Clinical ML Interface",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_dataset",
+    "research_patient_id",
+    "research_eye_id",
+    "eye_laterality",
+    "baseline_visit_id",
+    "baseline_bcva_etdrs",
+    "baseline_cst_um",
+    "linkage_status"
+  ],
+  "properties": {
+    "source_dataset": {
+      "type": "string"
+    },
+    "research_patient_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "research_eye_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "eye_laterality": {
+      "type": "string",
+      "enum": [
+        "OD",
+        "OS"
+      ]
+    },
+    "baseline_visit_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baseline_bcva_etdrs": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "baseline_cst_um": {
+      "type": "number",
+      "minimum": 0
+    },
+    "age_years": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0,
+      "maximum": 120
+    },
+    "hba1c_percent": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "hypertension": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "dyslipidemia": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "renal_disease": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "egfr_ml_min_1_73m2": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "anti_vegf_injection_count_prior_12mo": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "last_anti_vegf_agent": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "linkage_status": {
+      "type": "string",
+      "enum": [
+        "INTERNALLY_VERIFIED_OLIVES_PATIENT_EYE",
+        "CANDIDATE_CROSS_DATASET_MATCH",
+        "EXTERNALLY_VERIFIED_CROSS_DATASET_LINK",
+        "SYNTHETIC_SCHEMA_VALIDATION_ONLY"
+      ]
+    },
+    "provenance_note": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

@@ -1,0 +1,16 @@
+feature_name,source_dataset,temporal_role,unit_or_allowed_values,olives_native_supported,cross_dataset_required,baseline_predictor_eligible,notes
+baseline_bcva_etdrs,OLIVES Clinical_Data_Images.xlsx,baseline_predictor,ETDRS letters,true,false,true,Available from internally verified OLIVES patient-eye baseline records.
+baseline_cst_um,OLIVES Clinical_Data_Images.xlsx,baseline_predictor,um,true,false,true,Available from internally verified OLIVES patient-eye baseline records.
+irf_present,OLIVES Biomarker_Clinical_Data_Images.csv,baseline_predictor,0/1,true,false,true,Aggregated from baseline structured OCT annotations.
+srf_present,OLIVES Biomarker_Clinical_Data_Images.csv,baseline_predictor,0/1,true,false,true,Aggregated from baseline structured OCT annotations.
+dril_present,OLIVES Biomarker_Clinical_Data_Images.csv,baseline_predictor,0/1,true,false,true,Rare at baseline; use only with explicit missingness and prevalence review.
+hrf_present,OLIVES Biomarker_Clinical_Data_Images.csv,baseline_predictor,0/1,true,false,true,Constant positive in current OLIVES-native baseline cohort; not useful for discrimination without variation.
+ez_disruption_present,OLIVES Biomarker_Clinical_Data_Images.csv,baseline_predictor,0/1,true,false,true,Aggregated from baseline structured OCT annotations.
+number_of_annotated_scans,OLIVES Biomarker_Clinical_Data_Images.csv,baseline_predictor,count,true,false,true,Baseline scan-count provenance feature.
+age_years,OCT-DME.xlsx or future hospital source,baseline_predictor,years,false,true,false,Do not use for OLIVES-native modeling unless authoritative linkage or hospital source is available.
+sex,OCT-DME.xlsx or future hospital source,baseline_predictor,category,false,true,false,Do not use for OLIVES-native modeling unless authoritative linkage or hospital source is available.
+hba1c_percent,future hospital source,baseline_predictor,percent,false,false,false,Supported by hospital schema only; no live integration.
+hypertension,future hospital source,baseline_predictor,true/false,false,false,false,Supported by hospital schema only; no live integration.
+dyslipidemia,future hospital source,baseline_predictor,true/false,false,false,false,Supported by hospital schema only; no live integration.
+egfr_ml_min_1_73m2,future hospital source,baseline_predictor,mL/min/1.73m2,false,false,false,Supported by hospital schema only; no live integration.
+anti_vegf_injection_count_prior_12mo,future hospital source,treatment_history,count,false,false,false,Requires prediction-time definition and approved treatment provenance.

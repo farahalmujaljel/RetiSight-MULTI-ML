@@ -12,7 +12,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+          cache: "pip"
       - run: python -m pip install -r requirements-lock.txt
+      - run: python -m pip install -e .
+      - run: python -c "import retisight_multi_ml; print(retisight_multi_ml.__version__)"
       - run: ruff check src tests
       - run: pytest
-
+      - name: Prevent protected data from entering Git
+        run: |
+          set -euo pipefail
+          forbidden='^(data/raw/|data/interim/|data/processed/|artifacts/models/|artifacts/metadata/|reports/.+\.(csv|json)$)'
+          if git ls-files | grep -E "$forbidden" | grep -vE '/\.gitkeep$'; then
+            echo "Protected raw, row-level, artifact, CSV, or JSON output is tracked." >&2
+            exit 1
+          fi
+      - name: Synthetic CLI smoke test
+        run: |
+          set -euo pipefail
+          python -m retisight_multi_ml.cli --config configs/pipeline.yaml schema

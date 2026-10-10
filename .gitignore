@@ -3,6 +3,7 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 *.pyc
+*.egg-info/
 
 # Raw/protected research data and row-level derived outputs.
 data/raw/*
@@ -19,4 +20,3 @@ artifacts/metadata/*
 !data/fixtures/**
 !reports/**/.gitkeep
 !artifacts/**/.gitkeep
-

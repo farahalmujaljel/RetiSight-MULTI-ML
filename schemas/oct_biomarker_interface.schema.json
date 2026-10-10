@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/farahalmujaljel/RetiSight-MULTI-ML/schemas/oct_biomarker_interface.schema.json",
+  "title": "RetiSight OCT Biomarker Interface",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "research_eye_id",
+    "baseline_visit_id",
+    "biomarker_source",
+    "irf_present",
+    "srf_present",
+    "dril_present",
+    "hrf_present",
+    "ez_disruption_present",
+    "number_of_annotated_scans",
+    "annotation_timepoint"
+  ],
+  "properties": {
+    "research_eye_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "baseline_visit_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "biomarker_source": {
+      "type": "string",
+      "enum": [
+        "OLIVES_STRUCTURED_ANNOTATION",
+        "OCT_DL_MODEL_OUTPUT",
+        "SYNTHETIC_SCHEMA_VALIDATION_ONLY"
+      ]
+    },
+    "irf_present": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "srf_present": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "dril_present": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "hrf_present": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "ez_disruption_present": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ]
+    },
+    "number_of_annotated_scans": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "annotation_timepoint": {
+      "type": "string",
+      "enum": [
+        "baseline_only"
+      ]
+    },
+    "aggregation_rule": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "provenance_note": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

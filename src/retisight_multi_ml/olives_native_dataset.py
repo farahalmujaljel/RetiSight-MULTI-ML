@@ -6,6 +6,7 @@ from typing import Any
 import pandas as pd
 
 from .cleaning import clean_olives_biomarkers, clean_olives_clinical_images
+from .feature_metadata import feature_metadata_frame, validate_baseline_predictor_allowlist
 from .oct_aggregation import aggregate_baseline_oct
 
 BIOMARKER_FEATURES = [
@@ -44,6 +45,20 @@ def build_olives_native_baseline(raw_dir: Path, processed_dir: Path, report_dir:
     dataset.to_csv(processed_dir / "olives_native_baseline.csv", index=False)
 
     validation = validate_olives_native_baseline(dataset, clinical, biomarkers)
+    leakage_errors = validate_baseline_predictor_allowlist(
+        [
+            "baseline_bcva_etdrs",
+            "baseline_cst_um",
+            "irf_present",
+            "srf_present",
+            "dril_present",
+            "hrf_present",
+            "ez_disruption_present",
+            "number_of_annotated_scans",
+        ]
+    )
+    if leakage_errors:
+        raise ValueError(f"Baseline predictor metadata validation failed: {leakage_errors}")
     _write_reports(dataset, validation, report_dir)
     return dataset
 
@@ -92,6 +107,9 @@ def validate_olives_native_baseline(
 def _baseline_clinical(clinical: pd.DataFrame) -> pd.DataFrame:
     baseline = clinical[clinical["trial"].eq("TREX DME") & clinical["visit"].eq("V1")].copy()
     group_cols = ["trial", "arm", "study_folder", "patient_id_norm", "eye_id_norm", "eye_laterality"]
+    conflicts = _clinical_measurement_conflicts(baseline, group_cols)
+    if conflicts:
+        raise ValueError(f"Conflicting baseline clinical measurements found: {conflicts[:5]}")
     grouped = (
         baseline.groupby(group_cols, dropna=False)
         .agg(
@@ -105,6 +123,16 @@ def _baseline_clinical(clinical: pd.DataFrame) -> pd.DataFrame:
         .reset_index()
     )
     return grouped
+
+
+def _clinical_measurement_conflicts(clinical: pd.DataFrame, group_cols: list[str]) -> list[dict[str, Any]]:
+    grouped = (
+        clinical.groupby(group_cols, dropna=False)
+        .agg(bcva_values=("bcva", "nunique"), cst_values=("cst", "nunique"))
+        .reset_index()
+    )
+    conflicts = grouped[(grouped["bcva_values"] > 1) | (grouped["cst_values"] > 1)]
+    return conflicts.to_dict("records")
 
 
 def _annotation_conflicts(biomarkers: pd.DataFrame) -> int:
@@ -178,4 +206,21 @@ def _write_reports(dataset: pd.DataFrame, validation: dict[str, Any], report_dir
     (report_dir / "olives_native_dataset_validation.md").write_text(
         "\n".join(validation_lines), encoding="utf-8"
     )
-
+    feature_metadata_frame().to_csv(report_dir / "olives_native_feature_manifest.csv", index=False)
+    manifest_lines = [
+        "# OLIVES-Native Feature Manifest",
+        "",
+        "This manifest lists supported features and temporal predictor eligibility.",
+        "",
+    ]
+    for row in feature_metadata_frame().itertuples(index=False):
+        manifest_lines.append(
+            "- "
+            f"{row.feature_name}: source={row.source_dataset}; "
+            f"time={row.observation_time}; role={row.temporal_role}; "
+            f"eligible={row.allowed_as_baseline_predictor}; "
+            "missingness_recorded_in=row-level ignored export"
+        )
+    (report_dir / "olives_native_feature_manifest.md").write_text(
+        "\n".join(manifest_lines), encoding="utf-8"
+    )

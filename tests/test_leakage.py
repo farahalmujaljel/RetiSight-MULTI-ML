@@ -11,3 +11,10 @@ def test_olives_native_features_do_not_include_post_baseline_patterns():
 
     forbidden_tokens = ("post", "follow", "change", "response")
     assert all(not any(token in feature for token in forbidden_tokens) for feature in BIOMARKER_FEATURES)
+
+
+def test_feature_metadata_rejects_misleading_post_baseline_name():
+    from retisight_multi_ml.feature_metadata import validate_baseline_predictor_allowlist
+
+    errors = validate_baseline_predictor_allowlist(["baseline_bcva_etdrs", "endpoint_bcva"])
+    assert any("not allowed" in error for error in errors)
