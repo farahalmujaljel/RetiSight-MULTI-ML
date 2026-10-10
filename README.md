@@ -1,50 +1,82 @@
-# RetiSight MULTI-ML
+# RetiSight MULTI-ML — Engineering Release & Scientific Validation
 
-Research engineering pipeline for creating a traceable multimodal DME baseline dataset from OCT-DME and OLIVES tabular sources, then auditing whether real anti-VEGF response modeling is scientifically feasible.
+## Overview
 
-This repository is for exploratory research only. It is not a clinical decision-support device.
+This PR delivers the research-engineering implementation of **RetiSight MULTI-ML**, including OLIVES-native clinical/OCT data integration, baseline feature engineering, longitudinal linkage investigation, treatment-response feasibility auditing, model infrastructure, and integration contracts.
 
-## Setup
+The pipeline is ready for engineering review, with scientific safeguards that prevent unsupported patient linkage or invalid treatment-response modeling.
 
-```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -r requirements-lock.txt
-```
+## Release Status
 
-Place authorized source files in `data/raw/`:
-- `OCT-DME.xlsx`
-- `Biomarker_Clinical_Data_Images.csv`
-- `Clinical_Data_Images.xlsx`
+| Flag | Status |
+|---|---|
+| `ENGINEERING_RELEASE_READY` | `true` |
+| `CLINICAL_PREDICTION_READY` | `false` |
+| `CROSS_DATASET_LINKAGE_EXTERNALLY_VERIFIED` | `false` |
+| `SIX_MONTH_RESPONSE_MODELING_ENABLED` | `false` |
 
-Raw data and row-level outputs are ignored by Git.
+---
 
-## Run
+## 1. Data Integration & Processing
 
-```bash
-PYTHONPATH=src .venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml full
-PYTHONPATH=src .venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml olives-native-outcomes
-PYTHONPATH=src .venv/bin/python -m pytest
-.venv/bin/ruff check src tests
-```
+Implemented an end-to-end reproducible pipeline using three real research datasets:
 
-The full command regenerates inventory, cleaned tables, linkage reports, baseline features, the canonical multimodal dataset, outcome feasibility audit, schema files, and final status reports.
+- `Clinical_Data_Images.xlsx` — OLIVES clinical and image metadata
+- `Biomarker_Clinical_Data_Images.csv` — expert-annotated OCT biomarkers
+- `OCT-DME.xlsx` — TREX-DME longitudinal clinical workbook
 
-## Limitations
+### Implemented Capabilities
 
-The implemented linkage uses exact agreement between OLIVES image-path study folders and OCT-DME `StudyID`, with arm consistency where inferable. This produces candidate exact matches, not independently verified identity. Source documentation or clinical data-owner confirmation is required before treating the link as definitive.
+- Source inventory, provenance tracking, and file checksums
+- Data cleaning, normalization, and patient/eye identifier standardization
+- Patient-eye-visit reconstruction
+- Baseline V1 clinical feature extraction
+- Scan-level to eye-level OCT biomarker aggregation
+- OLIVES-native baseline dataset generation independent of external OCT-DME linkage
+- Canonical schema validation and aggregate reporting
 
-Response modeling is intentionally omitted when the outcome audit requires clinical review.
+### OLIVES-Native Cohort
 
-The OLIVES-native longitudinal recovery audit reconstructs patient-eye-visit records internally, but does not infer elapsed days from TREX-DME `V` visit labels.
+| Metric | Result |
+|---|---:|
+| Unique patients | 47 |
+| Unique eyes | 56 |
+| Longitudinal eye-visits | 934 |
+| Baseline eye records | 56 |
+| Duplicate research-eye IDs | 0 |
+| Missing baseline BCVA | 0 |
+| Missing baseline CST | 0 |
+| Detected clinical measurement conflicts | 0 |
 
-The recovery investigation can be regenerated with:
+### OCT Biomarker Statistics
 
-```bash
-PYTHONPATH=src .venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml recovery-investigation
-```
+| Biomarker | Positive eyes |
+|---|---:|
+| IRF | 56/56 |
+| SRF | 24/56 |
+| DRIL | 1/56 |
+| HRF | 56/56 |
+| EZ disruption | 19/56 |
 
-The independent OLIVES-native baseline export can be regenerated with:
+> Research limitation: IRF and HRF presence are constant in the current baseline cohort, and DRIL prevalence is extremely low. These features require careful selection and interpretation in future modeling.
 
-```bash
-PYTHONPATH=src .venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml olives-native-baseline
-```
+---
+
+## 2. Cross-Dataset Linkage Investigation — MULTI-03/05
+
+Investigated potential linkage between OLIVES patient-eye records and the OCT-DME clinical workbook using study identifiers and longitudinal clinical measurements.
+
+### Findings
+
+| Check | Result |
+|---|---:|
+| Candidate eye matches identified | 56 |
+| Baseline BCVA agreement | 56/56 |
+| Baseline CST agreement | 56/56 |
+| Laterality agreement | 56/56 |
+| Longitudinal BCVA/CST mismatches | 0 |
+
+All 56 links remain classified as:
+
+```text
+TRAJECTORY_SUPPORTED_CANDIDATE
