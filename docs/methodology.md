@@ -4,3 +4,4 @@ The pipeline inventories source files, normalizes identifiers and image-path str
 
 The observation unit is patient-eye at baseline. Image rows and B-scans are never treated as independent patient observations.
 
+MULTI-06A reconstructs OLIVES-native patient-eye-visit records from the ML-centric clinical file. These records are internally valid for longitudinal description, but TREX-DME `V` labels are not converted into elapsed days without documented timing.

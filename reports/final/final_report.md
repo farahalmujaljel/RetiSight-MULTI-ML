@@ -10,6 +10,7 @@ This report records executed pipeline status. It does not claim clinical validit
 - MULTI-04: PASSED_WITH_PREDICTOR_VARIATION_WARNINGS
 - MULTI-05: BLOCKED_BY_LINKAGE_VERIFICATION
 - MULTI-06: PASSED_REQUIRES_CLINICAL_REVIEW
+- MULTI-06A: BLOCKED_OLIVES_NATIVE_OUTCOME_TIMING
 - MULTI-07: CONDITIONAL_NOT_APPLICABLE
 - MULTI-08: CONDITIONAL_NOT_APPLICABLE
 - MULTI-09: PASSED
@@ -18,6 +19,7 @@ This report records executed pipeline status. It does not claim clinical validit
 ## Outcome Feasibility
 
 - Decision: REQUIRES_CLINICAL_REVIEW
+- OLIVES-native recovery: NOT_FEASIBLE for six-month anti-VEGF response labels without documented TREX-DME visit timing and eye-level treatment exposure.
 
 ## Parent Definition of Done
 

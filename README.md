@@ -22,6 +22,7 @@ Raw data and row-level outputs are ignored by Git.
 
 ```bash
 PYTHONPATH=src .venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml full
+PYTHONPATH=src .venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml olives-native-outcomes
 PYTHONPATH=src .venv/bin/python -m pytest
 .venv/bin/ruff check src tests
 ```
@@ -33,3 +34,5 @@ The full command regenerates inventory, cleaned tables, linkage reports, baselin
 The implemented linkage uses exact agreement between OLIVES image-path study folders and OCT-DME `StudyID`, with arm consistency where inferable. This produces candidate exact matches, not independently verified identity. Source documentation or clinical data-owner confirmation is required before treating the link as definitive.
 
 Response modeling is intentionally omitted when the outcome audit requires clinical review.
+
+The OLIVES-native longitudinal recovery audit reconstructs patient-eye-visit records internally, but does not infer elapsed days from TREX-DME `V` visit labels.

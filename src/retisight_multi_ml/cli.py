@@ -11,6 +11,7 @@ from .features import build_baseline_features
 from .inventory import inventory_sources
 from .linkage import build_linkage
 from .modeling import write_modeling_omission
+from .olives_native_outcomes import audit_olives_native_outcomes
 from .outcome_audit import audit_outcomes
 from .reporting import write_final_report, write_progress
 from .schema import validate_dataset, write_schema
@@ -37,7 +38,19 @@ def _paths(config_path: str) -> dict[str, Path]:
 
 def run_full(config_path: str) -> None:
     paths = _paths(config_path)
-    statuses = {f"MULTI-{i:02d}": "NOT_STARTED" for i in range(1, 11)}
+    statuses = {
+        "MULTI-01": "NOT_STARTED",
+        "MULTI-02": "NOT_STARTED",
+        "MULTI-03": "NOT_STARTED",
+        "MULTI-04": "NOT_STARTED",
+        "MULTI-05": "NOT_STARTED",
+        "MULTI-06": "NOT_STARTED",
+        "MULTI-06A": "NOT_STARTED",
+        "MULTI-07": "NOT_STARTED",
+        "MULTI-08": "NOT_STARTED",
+        "MULTI-09": "NOT_STARTED",
+        "MULTI-10": "NOT_STARTED",
+    }
     inventory_sources(load_sources(paths["data_sources_config"]), paths["inventory"])
     statuses["MULTI-01"] = "PASSED"
     write_clean_outputs(paths["raw"], paths["interim"], paths["cleaning"])
@@ -51,7 +64,18 @@ def run_full(config_path: str) -> None:
     statuses["MULTI-05"] = "BLOCKED_BY_LINKAGE_VERIFICATION" if not errors else "BLOCKED"
     outcome_decision = audit_outcomes(paths["raw"], paths["processed"], paths["outcomes"])
     statuses["MULTI-06"] = "PASSED_REQUIRES_CLINICAL_REVIEW"
-    reason = "Outcome audit decision was REQUIRES_CLINICAL_REVIEW; no response model may be trained yet."
+    olives_native_decision = audit_olives_native_outcomes(
+        paths["raw"], paths["processed"], paths["outcomes"]
+    )
+    statuses["MULTI-06A"] = (
+        "BLOCKED_OLIVES_NATIVE_OUTCOME_TIMING"
+        if olives_native_decision == "NOT_FEASIBLE"
+        else "PASSED_REQUIRES_CLINICAL_REVIEW"
+    )
+    reason = (
+        "Outcome audit decision was REQUIRES_CLINICAL_REVIEW and MULTI-06A found OLIVES-native "
+        "six-month response labels NOT_FEASIBLE without documented TREX-DME visit timing."
+    )
     write_modeling_omission(paths["modeling"], reason)
     write_evaluation_omission(paths["modeling"], reason)
     statuses["MULTI-07"] = "CONDITIONAL_NOT_APPLICABLE"
@@ -67,7 +91,17 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--config", default="configs/pipeline.yaml")
     sub = parser.add_subparsers(dest="command", required=True)
-    for name in ["inventory", "clean", "link", "features", "build", "outcomes", "schema", "full"]:
+    for name in [
+        "inventory",
+        "clean",
+        "link",
+        "features",
+        "build",
+        "outcomes",
+        "olives-native-outcomes",
+        "schema",
+        "full",
+    ]:
         sub.add_parser(name)
     args = parser.parse_args()
     paths = _paths(args.config)
@@ -83,6 +117,8 @@ def main() -> None:
         build_dataset(paths["features"], paths["processed"], paths["features"])
     elif args.command == "outcomes":
         audit_outcomes(paths["raw"], paths["processed"], paths["outcomes"])
+    elif args.command == "olives-native-outcomes":
+        audit_olives_native_outcomes(paths["raw"], paths["processed"], paths["outcomes"])
     elif args.command == "schema":
         write_schema(paths["schema"])
     elif args.command == "full":

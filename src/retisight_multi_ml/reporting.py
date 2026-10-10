@@ -25,6 +25,7 @@ def write_final_report(final_dir: Path, statuses: dict[str, str], outcome_decisi
         "## Outcome Feasibility",
         "",
         f"- Decision: {outcome_decision}",
+        "- OLIVES-native recovery: NOT_FEASIBLE for six-month anti-VEGF response labels without documented TREX-DME visit timing and eye-level treatment exposure.",
         "",
         "## Parent Definition of Done",
         "",
