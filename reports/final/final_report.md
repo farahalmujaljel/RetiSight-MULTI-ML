@@ -6,9 +6,9 @@ This report records executed pipeline status. It does not claim clinical validit
 
 - MULTI-01: PASSED
 - MULTI-02: PASSED
-- MULTI-03: PASSED_WITH_SOURCE_DOCUMENTATION_LIMITATION
-- MULTI-04: PASSED
-- MULTI-05: PASSED
+- MULTI-03: BLOCKED_EXTERNAL_CROSSWALK_CONFIRMATION
+- MULTI-04: PASSED_WITH_PREDICTOR_VARIATION_WARNINGS
+- MULTI-05: BLOCKED_BY_LINKAGE_VERIFICATION
 - MULTI-06: PASSED_REQUIRES_CLINICAL_REVIEW
 - MULTI-07: CONDITIONAL_NOT_APPLICABLE
 - MULTI-08: CONDITIONAL_NOT_APPLICABLE
@@ -22,5 +22,6 @@ This report records executed pipeline status. It does not claim clinical validit
 ## Parent Definition of Done
 
 - Genuine source files loaded: PASS when local raw files are present and inventory was run.
-- Cross-source linkage: PARTIAL; exact StudyID/path-folder links generated, but source-documentation confirmation remains a clinical/data-governance dependency.
+- Cross-source linkage: BLOCKED; exact StudyID/path-folder candidates were generated, but no independent source crosswalk was found.
+- Unified dataset: candidate exact-match baseline table exists, but it is not a verified linked research cohort until crosswalk confirmation.
 - Modeling: CONDITIONAL_NOT_APPLICABLE until response endpoint and exposure assumptions are clinically approved.

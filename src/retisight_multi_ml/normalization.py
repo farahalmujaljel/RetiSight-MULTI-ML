@@ -44,6 +44,15 @@ def parse_visit(value: Any) -> str | None:
 
 def path_parts(path: str) -> dict[str, str | None]:
     bits = [p for p in str(path).split("/") if p]
+    if bits and bits[0].upper().startswith("PRIME") and len(bits) >= 5:
+        return {
+            "trial": bits[0],
+            "arm": None,
+            "study_folder": bits[1].upper(),
+            "visit": parse_visit(bits[2]) or bits[2].upper(),
+            "eye_laterality": normalize_eye(bits[3]),
+            "image_name": bits[4],
+        }
     return {
         "trial": bits[0] if len(bits) > 0 else None,
         "arm": bits[1] if len(bits) > 1 else None,
@@ -52,4 +61,3 @@ def path_parts(path: str) -> dict[str, str | None]:
         "eye_laterality": normalize_eye(bits[4]) if len(bits) > 4 else None,
         "image_name": bits[5] if len(bits) > 5 else None,
     }
-

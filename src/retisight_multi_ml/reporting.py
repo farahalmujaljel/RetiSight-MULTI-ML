@@ -29,8 +29,8 @@ def write_final_report(final_dir: Path, statuses: dict[str, str], outcome_decisi
         "## Parent Definition of Done",
         "",
         "- Genuine source files loaded: PASS when local raw files are present and inventory was run.",
-        "- Cross-source linkage: PARTIAL; exact StudyID/path-folder links generated, but source-documentation confirmation remains a clinical/data-governance dependency.",
+        "- Cross-source linkage: BLOCKED; exact StudyID/path-folder candidates were generated, but no independent source crosswalk was found.",
+        "- Unified dataset: candidate exact-match baseline table exists, but it is not a verified linked research cohort until crosswalk confirmation.",
         "- Modeling: CONDITIONAL_NOT_APPLICABLE until response endpoint and exposure assumptions are clinically approved.",
     ]
     (final_dir / "final_report.md").write_text("\n".join(lines), encoding="utf-8")
-

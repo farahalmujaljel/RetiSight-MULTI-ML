@@ -30,6 +30,6 @@ The full command regenerates inventory, cleaned tables, linkage reports, baselin
 
 ## Limitations
 
-The implemented linkage uses exact agreement between OLIVES image-path study folders and OCT-DME `StudyID`, with arm consistency where inferable. This is traceable evidence, but source documentation or clinical data-owner confirmation is still required before treating the link as clinically definitive.
+The implemented linkage uses exact agreement between OLIVES image-path study folders and OCT-DME `StudyID`, with arm consistency where inferable. This produces candidate exact matches, not independently verified identity. Source documentation or clinical data-owner confirmation is required before treating the link as definitive.
 
 Response modeling is intentionally omitted when the outcome audit requires clinical review.

@@ -24,5 +24,4 @@ def test_linkage_rejects_unmatched_and_verifies_exact_match(tmp_path: Path):
         interim / "oct_dme_baseline.pkl"
     )
     out = build_linkage(interim, reports)
-    assert set(out["linkage_status"]) == {"VERIFIED", "UNMATCHED"}
-
+    assert set(out["linkage_status"]) == {"CANDIDATE_EXACT_MATCH", "UNMATCHED"}

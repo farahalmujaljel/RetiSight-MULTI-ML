@@ -71,6 +71,7 @@ def build_dataset(features_dir: Path, processed_dir: Path, report_dir: Path) -> 
             f"- Unique research patients: {dataset['research_patient_id'].nunique(dropna=True)}",
             f"- Duplicate research_eye_id rows: {duplicate_keys}",
             "",
+            "Rows are exact-match linkage candidates, not independently verified identities.",
             "Hospital-only variables are intentionally null unless supplied by authorized hospital data.",
         ]
     )

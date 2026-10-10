@@ -1,10 +1,12 @@
 # Linkage Validation
 
-Accepted links require an exact match between the OLIVES image-path study folder and OCT-DME `StudyID`.
-This is strong file-internal evidence but still needs source-documentation confirmation before clinical interpretation.
+Exact-match candidates require equality between the OLIVES image-path study folder and OCT-DME `StudyID`.
+This is reproducible matching evidence, not independently verified identity. No source crosswalk was found in the available documentation.
 
 - Candidate eyes: 96
-- Verified eyes: 56
-- Verified patients: 47
-- UNMATCHED: 80
-- VERIFIED: 56
+- Exact-match candidate eyes: 56
+- Exact-match candidate patients: 47
+- Independently verified eyes: 0
+- DoD implication: MULTI-03 remains BLOCKED until the data owner or source documentation confirms the crosswalk.
+- CANDIDATE_EXACT_MATCH: 56
+- UNMATCHED: 40

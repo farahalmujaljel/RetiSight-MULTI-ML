@@ -35,13 +35,20 @@ def build_linkage(interim_dir: Path, report_dir: Path) -> pd.DataFrame:
     )
     candidates["linkage_status"] = "UNMATCHED"
     matched = candidates["study_id"].notna()
-    candidates.loc[matched & candidates["arm_consistent"], "linkage_status"] = "VERIFIED"
+    candidates.loc[matched & candidates["arm_consistent"], "linkage_status"] = "CANDIDATE_EXACT_MATCH"
     candidates.loc[matched & ~candidates["arm_consistent"], "linkage_status"] = "AMBIGUOUS"
     candidates["matching_rule"] = candidates["linkage_status"].map(
         {
-            "VERIFIED": "OLIVES path study_folder exactly equals OCT-DME StudyID; arm is consistent where inferable.",
+            "CANDIDATE_EXACT_MATCH": "OLIVES path study_folder exactly equals OCT-DME StudyID; arm is consistent where inferable.",
             "AMBIGUOUS": "Study folder equals StudyID but arm/sheet relationship conflicts.",
             "UNMATCHED": "No OCT-DME StudyID exactly matches OLIVES path study_folder.",
+        }
+    )
+    candidates["identity_verification_status"] = candidates["linkage_status"].map(
+        {
+            "CANDIDATE_EXACT_MATCH": "REQUIRES_SOURCE_CROSSWALK_CONFIRMATION",
+            "AMBIGUOUS": "NOT_VERIFIED",
+            "UNMATCHED": "NOT_VERIFIED",
         }
     )
     candidates["research_patient_id"] = candidates["patient_id_norm"].map(lambda x: f"RP-{x}" if pd.notna(x) else None)
@@ -52,11 +59,11 @@ def build_linkage(interim_dir: Path, report_dir: Path) -> pd.DataFrame:
     adjudicated_rows = []
     group_cols = ["study_folder", "patient_id_norm", "eye_id_norm", "eye_laterality", "arm"]
     for _keys, group in candidates.groupby(group_cols, dropna=False):
-        verified_rows = group[group["linkage_status"].eq("VERIFIED")]
+        verified_rows = group[group["linkage_status"].eq("CANDIDATE_EXACT_MATCH")]
         ambiguous_rows = group[group["linkage_status"].eq("AMBIGUOUS")]
         if not verified_rows.empty:
             chosen = verified_rows.iloc[0].copy()
-            chosen["linkage_status"] = "VERIFIED"
+            chosen["linkage_status"] = "CANDIDATE_EXACT_MATCH"
         elif not ambiguous_rows.empty:
             chosen = ambiguous_rows.iloc[0].copy()
             chosen["linkage_status"] = "AMBIGUOUS"
@@ -72,17 +79,19 @@ def build_linkage(interim_dir: Path, report_dir: Path) -> pd.DataFrame:
         report_dir / "ambiguous_matches.csv", index=False
     )
     stats = matches["linkage_status"].value_counts(dropna=False).to_dict()
-    verified = matches[matches["linkage_status"] == "VERIFIED"]
+    candidates_exact = matches[matches["linkage_status"] == "CANDIDATE_EXACT_MATCH"]
     text = "\n".join(
         [
             "# Linkage Validation",
             "",
-            "Accepted links require an exact match between the OLIVES image-path study folder and OCT-DME `StudyID`.",
-            "This is strong file-internal evidence but still needs source-documentation confirmation before clinical interpretation.",
+            "Exact-match candidates require equality between the OLIVES image-path study folder and OCT-DME `StudyID`.",
+            "This is reproducible matching evidence, not independently verified identity. No source crosswalk was found in the available documentation.",
             "",
             f"- Candidate eyes: {matches[['patient_id_norm', 'eye_id_norm']].drop_duplicates().shape[0]}",
-            f"- Verified eyes: {verified[['patient_id_norm', 'eye_id_norm']].drop_duplicates().shape[0]}",
-            f"- Verified patients: {verified['patient_id_norm'].nunique()}",
+            f"- Exact-match candidate eyes: {candidates_exact[['patient_id_norm', 'eye_id_norm']].drop_duplicates().shape[0]}",
+            f"- Exact-match candidate patients: {candidates_exact['patient_id_norm'].nunique()}",
+            "- Independently verified eyes: 0",
+            "- DoD implication: MULTI-03 remains BLOCKED until the data owner or source documentation confirms the crosswalk.",
             *[f"- {k}: {v}" for k, v in stats.items()],
         ]
     )

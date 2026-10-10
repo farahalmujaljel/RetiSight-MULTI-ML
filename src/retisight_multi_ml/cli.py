@@ -43,12 +43,12 @@ def run_full(config_path: str) -> None:
     write_clean_outputs(paths["raw"], paths["interim"], paths["cleaning"])
     statuses["MULTI-02"] = "PASSED"
     build_linkage(paths["interim"], paths["linkage"])
-    statuses["MULTI-03"] = "PASSED_WITH_SOURCE_DOCUMENTATION_LIMITATION"
+    statuses["MULTI-03"] = "BLOCKED_EXTERNAL_CROSSWALK_CONFIRMATION"
     build_baseline_features(paths["interim"], paths["linkage"], paths["features"])
-    statuses["MULTI-04"] = "PASSED"
+    statuses["MULTI-04"] = "PASSED_WITH_PREDICTOR_VARIATION_WARNINGS"
     build_dataset(paths["features"], paths["processed"], paths["features"])
     errors = validate_dataset(paths["processed"] / "multimodal_baseline.csv")
-    statuses["MULTI-05"] = "PASSED" if not errors else "BLOCKED"
+    statuses["MULTI-05"] = "BLOCKED_BY_LINKAGE_VERIFICATION" if not errors else "BLOCKED"
     outcome_decision = audit_outcomes(paths["raw"], paths["processed"], paths["outcomes"])
     statuses["MULTI-06"] = "PASSED_REQUIRES_CLINICAL_REVIEW"
     reason = "Outcome audit decision was REQUIRES_CLINICAL_REVIEW; no response model may be trained yet."
@@ -91,4 +91,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
