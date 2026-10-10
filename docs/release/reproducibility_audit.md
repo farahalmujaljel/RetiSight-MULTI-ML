@@ -28,6 +28,7 @@ The pipeline generates row-level exports under ignored directories and aggregate
 - Local virtualenv uses Python 3.14.5.
 - Local system Python is 3.13.5.
 - Python 3.11 was not locally available; GitHub Actions is the authoritative Python 3.11 execution environment.
+- `requirements-lock.txt` is pinned to versions with Python 3.11 manylinux wheels verified by pip's platform resolver.
 
 ## Reproducibility Decision
 
