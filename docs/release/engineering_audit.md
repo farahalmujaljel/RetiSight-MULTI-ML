@@ -33,7 +33,7 @@ Engineering release is locally testable and reproducible for source-code, schema
 
 ## Remaining Engineering Gaps
 
-- Hosted GitHub Actions result must be confirmed after push.
+- Hosted GitHub Actions `ci` run 38088312519 passed on commit `77e60a9`.
 - Python 3.11 CI is configured but was not locally available in this workspace.
 - The lockfile is pinned to Python 3.11-compatible package versions for CI.
 - Real model training remains intentionally disabled until a validated outcome manifest exists.

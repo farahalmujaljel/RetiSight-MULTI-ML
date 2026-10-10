@@ -4,7 +4,7 @@ Audit date: 2026-10-11
 
 ## Verdict Flags
 
-- `ENGINEERING_RELEASE_READY`: false pending hosted GitHub Actions result and PR review.
+- `ENGINEERING_RELEASE_READY`: true for engineering review; merge still requires human PR review.
 - `CLINICAL_PREDICTION_READY`: false.
 - `SIX_MONTH_RESPONSE_MODELING_ENABLED`: false.
 - `CROSS_DATASET_LINKAGE_EXTERNALLY_VERIFIED`: false.
@@ -28,6 +28,7 @@ Audit date: 2026-10-11
 - `PYTHONPATH=src .venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml full`: passed with private local raw files present.
 - `.venv/bin/python -m pip install -e .`: passed.
 - `.venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml schema`: passed.
+- GitHub Actions `ci` run 38088312519 on commit `77e60a9`: passed on Ubuntu with Python 3.11.
 
 ## Not Released As Complete
 

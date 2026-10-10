@@ -17,6 +17,7 @@ python -m pytest
 - Test suite: 27 passed on Python 3.13.5 system environment.
 - Test suite: 27 passed on Python 3.14.5 virtual environment.
 - Ruff: passed after one import-order issue found during the audit was fixed.
+- GitHub Actions `ci` run 38088312519 passed on Ubuntu/Python 3.11 for commit `77e60a9`.
 
 ## Generated Outputs
 

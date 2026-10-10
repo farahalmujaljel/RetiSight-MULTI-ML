@@ -24,6 +24,7 @@ This PR prepares the MULTI-ML feature branch for engineering review while preser
 - Full pipeline passed locally with private raw files present.
 - Test suite passed locally: 27 tests.
 - Ruff passed locally.
+- GitHub Actions `ci` passed on commit `77e60a9`.
 
 ## Privacy
 
