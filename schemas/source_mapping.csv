@@ -1,0 +1,4 @@
+source,canonical_field,mapping
+OLIVES path,research_eye_id,Patient_ID + Eye_ID
+OCT-DME StudyID,patient_id_norm,Exact StudyID
+Hospital EHR,hba1c_percent,Future integration only

@@ -1,0 +1,7 @@
+random_seed: 20261010
+minimum_patients: 30
+minimum_positive_events: 10
+minimum_negative_events: 10
+group_column: research_patient_id
+outcome_column: response_5_letters_6mo
+

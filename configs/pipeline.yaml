@@ -1,0 +1,19 @@
+data_sources_config: configs/data_sources.yaml
+random_seed: 20261010
+outputs:
+  inventory_dir: reports/inventory
+  cleaning_dir: reports/cleaning
+  linkage_dir: reports/linkage
+  features_dir: reports/features
+  outcomes_dir: reports/outcomes
+  final_dir: reports/final
+  interim_dir: data/interim
+  processed_dir: data/processed
+  schema_dir: schemas
+linkage:
+  minimum_evidence: exact_study_folder_match
+outcomes:
+  target_day: 180
+  lower_day: 150
+  upper_day: 210
+

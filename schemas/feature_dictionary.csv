@@ -1,0 +1,10 @@
+field_name,clinical_meaning,data_type,unit_or_allowed_values,nullable,temporal_role
+research_patient_id,Stable de-identified patient key,string,,True,identity
+research_eye_id,Stable de-identified eye key,string,,True,identity
+eye_laterality,Eye laterality,category,OD/OS,True,identity
+baseline_bcva_etdrs,Baseline ETDRS visual acuity,number,letters,True,baseline_predictor
+baseline_cst_um,Baseline central subfield thickness,number,um,True,baseline_predictor
+irf_present,Any baseline scan annotated with intraretinal fluid,integer,0/1,True,baseline_predictor
+srf_present,Any baseline scan annotated with subretinal fluid,integer,0/1,True,baseline_predictor
+hba1c_percent,Future hospital HbA1c value,number,percent,True,future_hospital
+egfr_ml_min_1_73m2,Future hospital renal function,number,mL/min/1.73m2,True,future_hospital

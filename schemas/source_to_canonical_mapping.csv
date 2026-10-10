@@ -1,0 +1,4 @@
+source_field,canonical_field
+Patient_ID,research_patient_id
+Eye_ID,research_eye_id
+StudyID,patient_id_norm

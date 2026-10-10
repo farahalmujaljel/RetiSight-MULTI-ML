@@ -1,0 +1,17 @@
+sources:
+  oct_dme:
+    name: OCT-DME.xlsx
+    path: data/raw/OCT-DME.xlsx
+    url: https://drive.google.com/file/d/1vNXdnp18vana9Hd_e5XRJEb06HYN6RU5/view
+    intended_use: Longitudinal DME visual acuity/OCT/treatment workbook.
+  olives_biomarkers:
+    name: Biomarker_Clinical_Data_Images.csv
+    path: data/raw/Biomarker_Clinical_Data_Images.csv
+    url: https://drive.google.com/file/d/1gshHa1NLqS1YptgnfDDsGQBZLcf54Osj/view
+    intended_use: Image-level OLIVES OCT biomarker annotations.
+  olives_clinical_images:
+    name: Clinical_Data_Images.xlsx
+    path: data/raw/Clinical_Data_Images.xlsx
+    url: https://drive.google.com/file/d/1K7VdTY74QCVIKrD8k3DA-EEdNz0xBJ_R/view
+    intended_use: OLIVES image path, eye, patient, BCVA, and CST table.
+

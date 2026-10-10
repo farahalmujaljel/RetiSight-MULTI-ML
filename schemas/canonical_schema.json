@@ -1,0 +1,89 @@
+{
+  "entities": [
+    "Patient",
+    "Eye",
+    "Visit",
+    "ClinicalAssessment",
+    "OCTExamination",
+    "OCTBiomarkerObservation",
+    "TreatmentAdministration",
+    "TreatmentCourse",
+    "FollowUpAssessment",
+    "TreatmentResponse",
+    "DataProvenance"
+  ],
+  "fields": [
+    {
+      "field_name": "research_patient_id",
+      "clinical_meaning": "Stable de-identified patient key",
+      "data_type": "string",
+      "unit_or_allowed_values": null,
+      "nullable": true,
+      "temporal_role": "identity"
+    },
+    {
+      "field_name": "research_eye_id",
+      "clinical_meaning": "Stable de-identified eye key",
+      "data_type": "string",
+      "unit_or_allowed_values": null,
+      "nullable": true,
+      "temporal_role": "identity"
+    },
+    {
+      "field_name": "eye_laterality",
+      "clinical_meaning": "Eye laterality",
+      "data_type": "category",
+      "unit_or_allowed_values": "OD/OS",
+      "nullable": true,
+      "temporal_role": "identity"
+    },
+    {
+      "field_name": "baseline_bcva_etdrs",
+      "clinical_meaning": "Baseline ETDRS visual acuity",
+      "data_type": "number",
+      "unit_or_allowed_values": "letters",
+      "nullable": true,
+      "temporal_role": "baseline_predictor"
+    },
+    {
+      "field_name": "baseline_cst_um",
+      "clinical_meaning": "Baseline central subfield thickness",
+      "data_type": "number",
+      "unit_or_allowed_values": "um",
+      "nullable": true,
+      "temporal_role": "baseline_predictor"
+    },
+    {
+      "field_name": "irf_present",
+      "clinical_meaning": "Any baseline scan annotated with intraretinal fluid",
+      "data_type": "integer",
+      "unit_or_allowed_values": "0/1",
+      "nullable": true,
+      "temporal_role": "baseline_predictor"
+    },
+    {
+      "field_name": "srf_present",
+      "clinical_meaning": "Any baseline scan annotated with subretinal fluid",
+      "data_type": "integer",
+      "unit_or_allowed_values": "0/1",
+      "nullable": true,
+      "temporal_role": "baseline_predictor"
+    },
+    {
+      "field_name": "hba1c_percent",
+      "clinical_meaning": "Future hospital HbA1c value",
+      "data_type": "number",
+      "unit_or_allowed_values": "percent",
+      "nullable": true,
+      "temporal_role": "future_hospital"
+    },
+    {
+      "field_name": "egfr_ml_min_1_73m2",
+      "clinical_meaning": "Future hospital renal function",
+      "data_type": "number",
+      "unit_or_allowed_values": "mL/min/1.73m2",
+      "nullable": true,
+      "temporal_role": "future_hospital"
+    }
+  ]
+}

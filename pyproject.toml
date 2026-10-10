@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "retisight-multi-ml"
+version = "0.1.0"
+description = "Research-grade multimodal DME data integration and outcome feasibility pipeline."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "joblib",
+  "matplotlib",
+  "numpy",
+  "openpyxl",
+  "pandas",
+  "pydantic",
+  "PyYAML",
+  "scikit-learn",
+  "scipy",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[project.scripts]
+retisight-multi-ml = "retisight_multi_ml.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 180
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
