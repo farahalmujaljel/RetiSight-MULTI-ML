@@ -13,6 +13,7 @@ from .linkage import build_linkage
 from .modeling import write_modeling_omission
 from .olives_native_outcomes import audit_olives_native_outcomes
 from .outcome_audit import audit_outcomes
+from .recovery_investigation import run_recovery_investigation
 from .reporting import write_final_report, write_progress
 from .schema import validate_dataset, write_schema
 
@@ -67,14 +68,30 @@ def run_full(config_path: str) -> None:
     olives_native_decision = audit_olives_native_outcomes(
         paths["raw"], paths["processed"], paths["outcomes"]
     )
+    recovery_decisions = run_recovery_investigation(
+        paths["raw"],
+        {
+            "linkage": paths["linkage"],
+            "outcomes": paths["outcomes"],
+            "docs": Path("docs/subtasks"),
+            "processed": paths["processed"],
+        },
+    )
     statuses["MULTI-06A"] = (
         "BLOCKED_OLIVES_NATIVE_OUTCOME_TIMING"
         if olives_native_decision == "NOT_FEASIBLE"
         else "PASSED_REQUIRES_CLINICAL_REVIEW"
     )
+    statuses["MULTI-03"] = (
+        "TRAJECTORY_SUPPORTED_CANDIDATES_REQUIRE_EXTERNAL_CONFIRMATION"
+        if recovery_decisions["linkage_decision"].startswith("TRAJECTORY_SUPPORTED")
+        else statuses["MULTI-03"]
+    )
+    statuses["MULTI-06"] = "BLOCKED_TIMING_CROSSWALK_REQUIRED"
     reason = (
-        "Outcome audit decision was REQUIRES_CLINICAL_REVIEW and MULTI-06A found OLIVES-native "
-        "six-month response labels NOT_FEASIBLE without documented TREX-DME visit timing."
+        "MULTI-06 remains blocked because 150-210 day Vision-sheet ETDRS cells have no "
+        "authoritative patient-eye crosswalk, and MULTI-06A found OLIVES-native six-month "
+        "response labels NOT_FEASIBLE without documented TREX-DME visit timing."
     )
     write_modeling_omission(paths["modeling"], reason)
     write_evaluation_omission(paths["modeling"], reason)
@@ -99,6 +116,7 @@ def main() -> None:
         "build",
         "outcomes",
         "olives-native-outcomes",
+        "recovery-investigation",
         "schema",
         "full",
     ]:
@@ -119,6 +137,16 @@ def main() -> None:
         audit_outcomes(paths["raw"], paths["processed"], paths["outcomes"])
     elif args.command == "olives-native-outcomes":
         audit_olives_native_outcomes(paths["raw"], paths["processed"], paths["outcomes"])
+    elif args.command == "recovery-investigation":
+        run_recovery_investigation(
+            paths["raw"],
+            {
+                "linkage": paths["linkage"],
+                "outcomes": paths["outcomes"],
+                "docs": Path("docs/subtasks"),
+                "processed": paths["processed"],
+            },
+        )
     elif args.command == "schema":
         write_schema(paths["schema"])
     elif args.command == "full":

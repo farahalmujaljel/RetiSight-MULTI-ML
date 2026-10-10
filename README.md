@@ -36,3 +36,9 @@ The implemented linkage uses exact agreement between OLIVES image-path study fol
 Response modeling is intentionally omitted when the outcome audit requires clinical review.
 
 The OLIVES-native longitudinal recovery audit reconstructs patient-eye-visit records internally, but does not infer elapsed days from TREX-DME `V` visit labels.
+
+The recovery investigation can be regenerated with:
+
+```bash
+PYTHONPATH=src .venv/bin/python -m retisight_multi_ml.cli --config configs/pipeline.yaml recovery-investigation
+```

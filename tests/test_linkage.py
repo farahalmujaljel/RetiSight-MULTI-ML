@@ -2,7 +2,12 @@ from pathlib import Path
 
 import pandas as pd
 
-from retisight_multi_ml.linkage import build_linkage
+from retisight_multi_ml.linkage import OCT_SHEETS_TO_ARM, build_linkage
+
+
+def test_oct_sheet_arm_mapping_distinguishes_monthly_arm():
+    assert OCT_SHEETS_TO_ARM["Monthly"] == "Monthly"
+    assert OCT_SHEETS_TO_ARM["Year 3 Monthly"] == "Monthly"
 
 
 def test_linkage_rejects_unmatched_and_verifies_exact_match(tmp_path: Path):

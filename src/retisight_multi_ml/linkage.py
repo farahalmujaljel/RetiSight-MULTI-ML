@@ -5,12 +5,13 @@ from pathlib import Path
 import pandas as pd
 
 OCT_SHEETS_TO_ARM = {
-    "Monthly": "GILA",
+    "Monthly": "Monthly",
     "GILA": "GILA",
-    "Year 3 GILA": "GILA",
+    "Year 3 Monthly": "Monthly",
     "GILA Vision": "GILA",
     "TREX": "TREX",
     "Year 3 TREX": "TREX",
+    "Year 3 GILA": "GILA",
     "TREX Vision": "TREX",
 }
 

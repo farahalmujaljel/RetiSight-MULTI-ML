@@ -7,3 +7,5 @@ The closure review found that the ID-bearing OCT-DME worksheets do not expose us
 The current pipeline audits candidate follow-up availability but does not promote labels for modeling unless anti-VEGF exposure, time zero, endpoint interpretation, and any worksheet crosswalk are clinically reviewed.
 
 MULTI-06A adds an OLIVES-native recovery audit from `Clinical_Data_Images.xlsx`. It reconstructs native patient-eye-visit BCVA/CST records, but TREX-DME OLIVES visits are labelled as `V1` through `V27` rather than documented elapsed weeks or dates. Therefore, a 150-210 day endpoint is not calculated from OLIVES-native data.
+
+The MULTI-03/06 recovery investigation finds 165 ETDRS cells in the 150-210 day window in the no-ID Vision sheets, but no authoritative crosswalk connecting those rows to OLIVES eyes. Six-month modeling remains disabled.
